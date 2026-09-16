@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f1417">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Applied Tension — คู่มือรับมือเป็นลมจากเลือด/เข็ม</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f1417; --card:#161d21; --card2:#1c252a; --fg:#e9eff2; --muted:#8ea2ab;
+  --line:#26313a; --accent:#4dd0c1; --accent-dim:#173733; --warn:#f0b429;
+  --danger:#f0685a; --ok:#63c98a; --r:14px;
+}
+@media (prefers-color-scheme: light){
+  :root{ --bg:#f3f6f7; --card:#ffffff; --card2:#eef3f4; --fg:#0f1a1f; --muted:#5a6b73;
+         --line:#dce4e7; --accent:#0c8a7c; --accent-dim:#d6efeb; }
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--fg);
+  font-family:"Noto Sans Thai",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:16px; line-height:1.65; padding-bottom:84px;
+  -webkit-font-smoothing:antialiased;
+}
+header{
+  position:sticky; top:0; z-index:20; background:var(--bg);
+  border-bottom:1px solid var(--line); padding:12px 16px 10px;
+  padding-top:calc(12px + env(safe-area-inset-top));
+}
+header h1{margin:0;font-size:15px;font-weight:700;letter-spacing:.2px}
+header p{margin:2px 0 0;font-size:12px;color:var(--muted)}
+main{padding:16px; max-width:640px; margin:0 auto}
+section{display:none} section.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin:0 0 14px}
+.card h2{margin:0 0 10px;font-size:17px;font-weight:700}
+.card h3{margin:18px 0 8px;font-size:14px;font-weight:700;color:var(--accent)}
+.card h3:first-child{margin-top:0}
+.card p{margin:0 0 10px;font-size:14.5px}
+.card p:last-child{margin-bottom:0}
+.muted{color:var(--muted);font-size:13px}
+ul,ol{margin:0 0 10px;padding-left:20px;font-size:14.5px}
+li{margin-bottom:6px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:0 0 10px}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:500;font-size:12px}
+.pill{display:inline-block;padding:2px 9px;border-radius:99px;font-size:11.5px;font-weight:700}
+.pill.a{background:var(--accent-dim);color:var(--accent)}
+.pill.w{background:rgba(240,180,41,.13);color:var(--warn)}
+.pill.d{background:rgba(240,104,90,.13);color:var(--danger)}
+.pill.o{background:rgba(99,201,138,.13);color:var(--ok)}
+.note{border-left:3px solid var(--accent);background:var(--card2);padding:10px 12px;border-radius:0 8px 8px 0;font-size:14px;margin:0 0 12px}
+.note.w{border-color:var(--warn)} .note.d{border-color:var(--danger)}
+pre.flow{background:var(--card2);border-radius:10px;padding:12px;font-size:11.5px;line-height:1.7;overflow-x:auto;margin:0 0 12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+
+.timerwrap{display:flex;flex-direction:column;align-items:center;gap:6px}
+.ring{position:relative;width:250px;height:250px;max-width:74vw;max-height:74vw}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .bgc{fill:none;stroke:var(--line);stroke-width:10}
+.ring .fgc{fill:none;stroke:var(--accent);stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset .1s linear,stroke .3s}
+.ring.rest .fgc{stroke:var(--muted)}
+.ringtxt{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.phase{font-size:20px;font-weight:700;letter-spacing:.5px}
+.count{font-size:52px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.cyc{font-size:12.5px;color:var(--muted)}
+.btnrow{display:flex;gap:10px;width:100%;margin-top:14px}
+button{
+  font-family:inherit;font-size:15px;font-weight:700;border-radius:12px;
+  border:1px solid var(--line);background:var(--card2);color:var(--fg);
+  padding:13px 16px;cursor:pointer;flex:1
+}
+button.primary{background:var(--accent);color:#05201d;border-color:transparent}
+button:active{opacity:.75}
+.cues{margin-top:16px;width:100%}
+.cue{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;padding:7px 0;border-bottom:1px solid var(--line)}
+.cue:last-child{border:0}
+.cue .n{flex:0 0 22px;height:22px;border-radius:99px;background:var(--accent-dim);color:var(--accent);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.settings{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.settings label{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:4px;flex:1;min-width:88px}
+select,input,textarea{
+  font-family:inherit;font-size:14px;background:var(--card2);color:var(--fg);
+  border:1px solid var(--line);border-radius:10px;padding:10px;width:100%
+}
+textarea{min-height:76px;resize:vertical}
+
+.day{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin-bottom:10px}
+.day.today{border-color:var(--accent)}
+.dayhead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px}
+.dayhead b{font-size:15px}
+.dayfocus{font-size:13px;color:var(--muted);margin-bottom:10px}
+.dots{display:flex;gap:8px}
+.dot{width:38px;height:38px;border-radius:11px;border:1.5px solid var(--line);background:transparent;
+  display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--muted);
+  cursor:pointer;flex:0 0 auto;font-weight:700;padding:0}
+.dot.done{background:var(--accent);border-color:var(--accent);color:#05201d}
+
+.step{display:flex;gap:12px;padding:13px;border-radius:12px;margin-bottom:8px;background:var(--card);border:1px solid var(--line);align-items:flex-start}
+.step .lv{flex:0 0 26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#05201d}
+.step .t{font-size:14.5px;font-weight:700;margin:0 0 2px}
+.step .d{font-size:13px;color:var(--muted);margin:0}
+.step.l1,.step.l2{border-color:var(--ok)} .step.l1 .lv,.step.l2 .lv{background:var(--ok)}
+.step.l3,.step.l4{border-color:var(--warn)} .step.l3 .lv,.step.l4 .lv{background:var(--warn)}
+.step.l5{border-color:var(--danger)} .step.l5 .lv{background:var(--danger)}
+
+.entry{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:8px;font-size:13.5px}
+.entry .top{display:flex;justify-content:space-between;gap:8px;margin-bottom:4px}
+.entry .top b{font-size:13.5px}
+.del{background:none;border:0;color:var(--muted);font-size:12px;padding:0;flex:0 0 auto;font-weight:500;cursor:pointer}
+.field{margin-bottom:12px}
+.field>span{display:block;font-size:12.5px;color:var(--muted);margin-bottom:5px}
+
+nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:30;display:flex;
+  background:var(--card);border-top:1px solid var(--line);
+  padding-bottom:env(safe-area-inset-bottom)
+}
+nav button{
+  flex:1;border:0;background:none;border-radius:0;padding:9px 2px 10px;
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  font-size:10.5px;font-weight:500;color:var(--muted)
+}
+nav button .ic{font-size:19px;line-height:1}
+nav button.on{color:var(--accent);font-weight:700}
+details{border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px;background:var(--card)}
+details summary{cursor:pointer;font-weight:700;font-size:14.5px;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--accent)}
+details[open] summary:before{content:"▾ "}
+details .body{padding-top:10px;font-size:14px}
+.kpi{display:flex;gap:10px;margin-bottom:14px}
+.kpi div{flex:1;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}
+.kpi b{display:block;font-size:24px;line-height:1.2}
+.kpi span{font-size:11px;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<header>
+  <h1 id="hTitle">Applied Tension</h1>
+  <p id="hSub">คู่มือรับมืออาการเป็นลมจากเลือด เข็ม และความเจ็บ</p>
+</header>
+
+<main>
+
+<!-- ============ ฝึก ============ -->
+<section id="s-train" class="on">
+  <div class="card">
+    <div class="timerwrap">
+      <div class="ring" id="ring">
+        <svg viewBox="0 0 120 120">
+          <circle class="bgc" cx="60" cy="60" r="52"></circle>
+          <circle class="fgc" id="arc" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="0"></circle>
+        </svg>
+        <div class="ringtxt">
+          <div class="phase" id="phase">พร้อมเริ่ม</div>
+          <div class="count" id="count">15</div>
+          <div class="cyc" id="cyc">ครั้งที่ 1 / 5</div>
+        </div>
+      </div>
+
+      <div class="btnrow">
+        <button class="primary" id="btnStart">เริ่ม</button>
+        <button id="btnReset">รีเซ็ต</button>
+      </div>
+
+      <div class="cues">
+        <div class="cue"><div class="n">1</div><div><b>แขน</b> — กำหมัดแน่น เกร็งต้นแขน</div></div>
+        <div class="cue"><div class="n">2</div><div><b>ลำตัว</b> — เกร็งหน้าท้องเหมือนจะโดนต่อย</div></div>
+        <div class="cue"><div class="n">3</div><div><b>ขา + ก้น</b> — บีบต้นขาเข้าหากัน เกร็งน่อง ขมิบก้น</div></div>
+        <div class="cue"><div class="n">!</div><div><b>หายใจปกติตลอด ห้ามกลั้น</b> — ถ้านับออกเสียงได้ แปลว่าไม่ได้กลั้น</div></div>
+        <div class="cue"><div class="n">✓</div><div><b>ทำถูกเมื่อ</b> รู้สึกอุ่นวูบขึ้นที่หน้าราววินาทีที่ 10–15</div></div>
+      </div>
+
+      <div class="settings">
+        <label>เกร็ง (วินาที)
+          <select id="setTense"><option>10</option><option selected>15</option><option>20</option></select>
+        </label>
+        <label>คลาย (วินาที)
+          <select id="setRest"><option>20</option><option selected>30</option></select>
+        </label>
+        <label>จำนวนครั้ง/รอบ
+          <select id="setCycles"><option>3</option><option selected>5</option><option>7</option></select>
+        </label>
+        <label>เสียง/สั่น
+          <select id="setSound"><option value="1" selected>เปิด</option><option value="0">ปิด</option></select>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="kpi">
+    <div><b id="kToday">0</b><span>รอบวันนี้ (เป้า 5)</span></div>
+    <div><b id="kStreak">0</b><span>วันติดกัน</span></div>
+    <div><b id="kTotal">0</b><span>รอบสะสม</span></div>
+  </div>
+
+  <div class="note w"><b>จำกติกาข้อเดียว:</b> คลื่นไส้เมื่อไหร่ = เกร็งทันที ไม่ต้องรอดูว่าจริงไหม เกร็งฟรี 100 ครั้งก็ไม่เสียหาย</div>
+
+  <details>
+    <summary>ทำผิดบ่อย 4 ข้อ</summary>
+    <div class="body">
+      <ol>
+        <li><b>กลั้นหายใจตอนเกร็ง</b> — ความดันพุ่งตอนกลั้น แต่ดิ่งทันทีตอนปล่อย ซึ่งคือสิ่งที่เรากำลังป้องกัน</li>
+        <li><b>เกร็งคอกับหน้าแรงเกินไป</b> — ปวดหัว เกร็งเบาๆ พอ เน้นขา ก้น ท้อง แขน</li>
+        <li><b>เกร็งนานเกิน 15 วินาที</b> — ปวดหัว เมื่อยล้า แต่ไม่ได้ผลเพิ่ม ถ้าปวดหัวให้ลดเหลือ 10 วินาที</li>
+        <li><b>รอดูก่อนว่าอาการจะมาจริงไหม</b> — สายแล้ว</li>
+      </ol>
+    </div>
+  </details>
+
+  <details>
+    <summary>ท่าเสริม (ใช้ตั้งแต่วันที่ 4)</summary>
+    <div class="body">
+      <p><b>ท่ายืน</b> — ยืนไขว้ขาสองข้างทับกันแน่น พร้อมเกร็งขา ก้น ท้อง ใช้จริงตอนลุกจากเก้าอี้ทำฟันหรือยืนต่อแถว</p>
+      <p><b>ท่านอนแล้วลุก</b> — นอนราบ 2 นาที → เกร็ง 15 วิขณะยังนอน → ลุกนั่งโดยเกร็งค้าง → นั่ง 30 วิ → ยืนขึ้นโดยเกร็งค้าง</p>
+      <p class="muted">ท่าที่สองคือการซ้อมสถานการณ์ที่ทำให้คุณล้มบ่อยที่สุด (ลุกหลังเจาะเลือด / ลุกหลังนอนพัก)</p>
+    </div>
+  </details>
+</section>
+
+<!-- ============ ฉุกเฉิน ============ -->
+<section id="s-sos">
+  <div class="card">
+    <h2>บันไดสัญญาณเตือนของคุณ</h2>
+    <p class="muted">เวลาจากสัญญาณแรกถึงจุดเอาไม่อยู่ของคุณ ประมาณ 20 วินาที – 1 นาที พอ แต่ไม่มีเหลือให้ลังเล</p>
+  </div>
+
+  <div class="step l1"><div class="lv">1</div><div><p class="t">คลื่นไส้</p><p class="d">เกร็งทันที ไม่ต้องเปลี่ยนท่า ไม่ต้องรอดูว่าจริงไหม</p></div></div>
+  <div class="step l2"><div class="lv">2</div><div><p class="t">ร้อนวูบขึ้นหน้า</p><p class="d">ยังทัน เกร็งต่อ เริ่มมองหาที่นั่ง</p></div></div>
+  <div class="step l3"><div class="lv">3</div><div><p class="t">เหงื่อแตกที่มือ</p><p class="d">เริ่มสาย เกร็งต่อ + นั่งลงเดี๋ยวนี้ นั่งพื้นก็ได้ ไม่ต้องอาย</p></div></div>
+  <div class="step l4"><div class="lv">4</div><div><p class="t">หูอื้อ เสียงคนไกลออกไป</p><p class="d">สายแล้ว ลงไปนั่งพื้นทันที ก้มหัวต่ำกว่าหัวใจ</p></div></div>
+  <div class="step l5"><div class="lv">5</div><div><p class="t">ตามืดลงเป็นขอบดำ</p><p class="d">นอนราบ ยกขาสูง เดี๋ยวนี้ ห้ามฝืน แล้วค่อยเกร็งขาขณะนอน</p></div></div>
+
+  <div class="card">
+    <h3>กฎเหล็ก 3 ข้อ</h3>
+    <ul>
+      <li><b>ห้ามฝืนยืน/นั่งคุยต่อ</b> — พิสูจน์มาแล้วตั้งแต่ ป.5 ว่าการฝืนคือสิ่งที่ทำให้ล้ม</li>
+      <li><b>ห้ามหายใจลึกยาวเป็นเครื่องมือหลัก</b> — มันดันความดันลงต่ำเร็วขึ้น หายใจปกติพอ</li>
+      <li><b>ฟื้นแล้วอย่ารีบลุก</b> — นอนต่ออีก 5 นาทีหลังรู้สึกดีแล้ว แล้วลุก 2 จังหวะ: นอน → นั่ง 1 นาที (เกร็งไว้) → ยืน (เกร็งไว้)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>ก่อนไปเจาะเลือด / ฉีดยา / ทำฟัน</h3>
+    <ul>
+      <li><b>กินข้าวมาก่อน</b> — ท้องว่างทำให้เป็นลมง่ายขึ้น ไม่ใช่ง่ายลง</li>
+      <li>ถ้าหมอสั่งงดอาหาร ให้งดอาหารแต่ <b>ดื่มน้ำเปล่าได้</b> งดอาหาร ≠ งดน้ำ</li>
+      <li><b>ดื่มน้ำ 500 มล. ประมาณ 20–30 นาทีก่อน</b> และเติมเกลือ/เครื่องดื่มเกลือแร่</li>
+      <li>บอกเจ้าหน้าที่ล่วงหน้าว่า <b>เคยเป็นลม ขอทำท่านอน</b> และขอนอนพักต่ออีก 10 นาทีหลังเสร็จ</li>
+      <li>ตกลง <b>สัญญาณมือ</b> กับหมอไว้ก่อน เช่น ยกมือซ้าย = หยุด (คืนอำนาจควบคุมให้ตัวเอง)</li>
+      <li><b>เกร็งไว้ตลอด</b> ระหว่างทำ และโดยเฉพาะช่วง 30 นาทีหลังเสร็จ ซึ่งคือช่วงเสี่ยงจริงของคุณ</li>
+      <li>ถ้ายังมีประจำเดือน อย่านัดผ่าตรงกับช่วงนั้น</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>เมื่อไหร่ต้องไปหาหมอจริงๆ</h3>
+    <ul>
+      <li>เป็นลม <b>โดยไม่มีสิ่งกระตุ้นเลย</b> หรือเป็นขณะนอนอยู่</li>
+      <li>เป็นลม <b>ขณะออกแรง/ออกกำลังกาย</b></li>
+      <li>มี <b>เจ็บหน้าอก ใจสั่นผิดจังหวะ หอบเหนื่อยผิดปกติ</b> ร่วมด้วย</li>
+      <li>มีคนในครอบครัวเสียชีวิตกะทันหันตั้งแต่อายุน้อย</li>
+      <li>ฟื้นแล้ว <b>สับสนนานเกิน 5 นาที</b> หรือมีคนเห็นว่าเกร็งกระตุกนานผิดปกติ</li>
+    </ul>
+    <p class="muted">ยังไม่เคยตรวจ EKG ควรตรวจสัก 1 ใบก่อนผ่าฟัน เพื่อตัดเรื่องหัวใจออกให้สนิท</p>
+  </div>
+</section>
+
+<!-- ============ ตาราง ============ -->
+<section id="s-plan">
+  <div class="card">
+    <h2>7 วันแรก — ยังไม่ต้องเจอสิ่งที่กลัว</h2>
+    <p>เป้าหมายสัปดาห์นี้คือทำให้ร่างกายเกร็งได้อัตโนมัติโดยไม่ต้องคิด <b>วันละ 5 รอบ รอบละ 3 นาที</b> ไม่ต้องทำติดกัน</p>
+    <p class="muted">แตะช่องตัวเลขเพื่อเช็กว่าทำรอบนั้นแล้ว — กดปุ่มในหน้า "ฝึก" จนครบจะเช็กให้อัตโนมัติ</p>
+  </div>
+  <div id="planList"></div>
+  <div class="card">
+    <h3>หลังจบ 7 วัน</h3>
+    <p>เราจะไปสร้าง fear hierarchy และเริ่ม exposure ทีละขั้น <b>ไม่ต้องรอครบ 7 วันถึงจะคุยกันต่อ</b> — ฝึกได้ 2–3 วันจนจับความรู้สึกอุ่นขึ้นหน้าได้แล้ว บอกได้เลย</p>
+  </div>
+  <div class="card">
+    <h3>นับถอยหลัง</h3>
+    <p id="countdown" class="muted">—</p>
+    <div class="field"><span>วันนัดหมอฟัน (แก้ไขได้)</span><input type="date" id="targetDate"></div>
+  </div>
+</section>
+
+<!-- ============ บันทึก ============ -->
+<section id="s-log">
+  <div class="card">
+    <h2>บันทึกการฝึก</h2>
+    <div class="field"><span>วันที่</span><input type="date" id="lgDate"></div>
+    <div class="field"><span>ฝึกได้กี่รอบ (จาก 5)</span>
+      <select id="lgRounds"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option selected>5</option></select>
+    </div>
+    <div class="field"><span>รู้สึกอุ่นขึ้นหน้าไหม</span>
+      <select id="lgWarm"><option>ได้ทุกรอบ</option><option>บางรอบ</option><option>ไม่รู้สึกเลย</option></select>
+    </div>
+    <div class="field"><span>ปวดหัวไหม</span>
+      <select id="lgAche"><option>ไม่</option><option>เล็กน้อย</option><option>มาก</option></select>
+    </div>
+    <div class="field"><span>หมายเหตุ</span><textarea id="lgNote" placeholder="เช่น รอบเย็นเกร็งแล้วไม่อุ่น อาจเพราะเหนื่อย"></textarea></div>
+    <button class="primary" id="lgSave">บันทึก</button>
+  </div>
+
+  <div class="card">
+    <h2>บันทึกอาการจริง</h2>
+    <p class="muted">ถ้ามีอาการเกิดขึ้นจริง ให้จดทันที — ข้อมูลนี้มีค่ากว่าการฝึก 5 รอบ</p>
+    <div class="field"><span>วันที่</span><input type="date" id="evDate"></div>
+    <div class="field"><span>เกิดตอนไหน / ทำอะไรอยู่</span><input id="evWhat" placeholder="เช่น โกนขนแล้วบาด เห็นเลือด"></div>
+    <div class="field"><span>สัญญาณแรกคืออะไร</span><input id="evFirst" placeholder="เช่น คลื่นไส้"></div>
+    <div class="field"><span>กี่วินาทีถึงหนักขึ้น</span><input id="evSec" placeholder="เช่น ~30 วินาที"></div>
+    <div class="field"><span>ไปถึงระดับไหน</span>
+      <select id="evPeak">
+        <option>1 คลื่นไส้</option><option>2 ร้อนวูบขึ้นหน้า</option><option>3 เหงื่อแตก</option>
+        <option>4 หูอื้อ</option><option>5 ตามืด</option><option>6 หมดสติ</option>
+      </select>
+    </div>
+    <div class="field"><span>ได้เกร็งไหม / ช่วยไหม</span>
+      <select id="evHelp"><option>เกร็งแล้วอาการหยุด</option><option>เกร็งแล้วดีขึ้นบ้าง</option><option>เกร็งแล้วไม่ช่วย</option><option>ไม่ได้เกร็ง</option></select>
+    </div>
+    <div class="field"><span>รายละเอียดเพิ่ม</span><textarea id="evNote"></textarea></div>
+    <button class="primary" id="evSave">บันทึกอาการ</button>
+  </div>
+
+  <div class="card">
+    <h2>ประวัติ</h2>
+    <div id="logList"></div>
+    <div class="btnrow">
+      <button id="btnCopy">คัดลอกไปส่งให้นักบำบัด</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ เข้าใจ ============ -->
+<section id="s-learn">
+  <div class="card">
+    <h2>สรุปเคสของคุณ</h2>
+    <p>หญิง 26 ปี รูปร่างสมส่วน ความดัน ~106–109 (ปกติ ค่อนไปทางปลายล่าง) มีระบบประสาทอัตโนมัติที่ไวกว่าคนทั่วไป</p>
+    <p><b>จุดสำคัญ: คุณไม่ได้กลัว "ภาพเลือด" คุณตอบสนองต่อ "ร่างกายของตัวเองถูกทำลาย"</b> — เลือดคนอื่นหรือในหนังเฉยๆ แต่แค่เจ็บที่ตัวเองโดยไม่มีเลือดก็ล้มได้</p>
+    <p><b>อีกจุด: คุณเป็นเอาตอน "จบแล้ว" ไม่ใช่ตอนโดนเข็ม</b> — ช่วงเสี่ยงจริงคือ 1–30 นาทีหลังหัตถการ</p>
+    <div class="note"><b>ทุนที่คุณมีอยู่แล้ว:</b> ทำฟันมาหลายครั้ง (ถอนฟัน ขูดหินปูนมีเลือด ฉีดยาชาเหงือก) ไม่เคยเป็นลมสักครั้ง เพราะเก้าอี้เอนนอน + คุณเกร็งตัวเอง นั่นคือ Applied Tension โดยบังเอิญ</div>
+  </div>
+
+  <div class="card">
+    <h2>ทำไมกลัวเลือดถึงเป็นลม</h2>
+    <p>โรคกลัวทั่วไป (หมา ที่สูง) ร่างกายจะ <b>เร่งเครื่อง</b> — ใจเต้นเร็ว ความดันขึ้น จึงตัวสั่นเหงื่อแตกแต่ไม่เป็นลม</p>
+    <p>โรคกลัวเลือดเป็นชนิดเดียวที่ทำให้คนเป็นลมจริง เพราะมันมี <b>2 จังหวะ (diphasic response)</b></p>
+<pre class="flow">จังหวะที่ 1  เจอสิ่งกระตุ้น → ความดันพุ่ง   (สั้นมาก ไม่กี่วินาที)
+                    ↓
+จังหวะที่ 2  ร่างกายเหยียบเบรกสุดแรง
+             ใจเต้นช้าลง + หลอดเลือดที่ขาคลาย
+                    ↓
+             เลือดกองที่ขา ขึ้นเลี้ยงสมองไม่พอ
+                    ↓
+             สมองสั่งปิดเครื่อง → ล้ม → ตัวนอนราบ</pre>
+    <p>"เบรก" คือ <b>เส้นประสาทเวกัส</b> คิดง่ายๆ ว่าเป็นคันเบรกของหัวใจ คนทั่วไปเหยียบเบา ของคุณเหยียบมิดจนรถดับ</p>
+    <h3>การเป็นลมไม่ใช่ความผิดพลาด แต่คือวิธีแก้ปัญหา</h3>
+    <p>สมองต้องการเลือด แต่แรงโน้มถ่วงดึงลงขา วิธีแก้ที่เร็วที่สุดคือทำให้หัวอยู่ระดับเดียวกับหัวใจ — ก็คือทำให้คุณล้มลงนอน นี่คือเหตุผลที่คุณสังเกตตัวเองถูกทั้งสองข้อ: นอนก่อนแล้วไม่เป็นลม / ฝืนแล้วอาการไม่หาย</p>
+  </div>
+
+  <div class="card">
+    <h2>ทำไมเป็นตอนจบแล้ว ไม่ใช่ตอนโดนเข็ม</h2>
+    <p>ระหว่างโดนเข็ม ร่างกายยังมีอะดรีนาลีนจากจังหวะที่ 1 ค้ำอยู่ ความดันยังไหว คุณจึงรู้สึกปกติ</p>
+    <p><b>พอหัตถการจบ อะดรีนาลีนถอน เหลือแต่เบรกที่ยังเหยียบค้าง</b> ความดันจึงดิ่งตอนนั้น</p>
+    <p class="muted">ดูดเลือดเสร็จ → นั่งพัก → ลุกเดิน → ล้ม | ฉีดวัคซีนเสร็จ → นั่งพัก 30 นาที → หมดสติ | กดหนองเสร็จ → ไปนอนพัก → หมดสติ</p>
+  </div>
+
+  <div class="card">
+    <h2>วงจรพิเศษของคุณ: กลัว "อาการวูบ" เอง</h2>
+    <p>หมากัดที่แก้มตอน ป.3 คุณเฉยๆ แต่เป็นลมหน้าเสาธงตอน ป.5–6 แล้วหลังจากนั้นถึงเริ่มเป็น — แปลว่านี่คือสิ่งที่ <b>เรียนรู้มาทีหลัง ไม่ได้ติดตัวมา</b> และสิ่งที่เรียนรู้มาได้ ก็เรียนรู้ใหม่ได้</p>
+<pre class="flow">รู้สึกวูบนิดหนึ่ง → "มาแล้ว เดี๋ยวจะเป็นลมอีก" → ตกใจ
+      ↑                                            ↓
+      └────────── เบรกถูกเหยียบหนักขึ้น ←──────────┘</pre>
+    <p>คุณกลัวความรู้สึกของตัวเอง แล้วความกลัวนั้นทำให้อาการที่กลัวเกิดจริง</p>
+  </div>
+
+  <div class="card">
+    <h2>ทำไมเป็นลมตอนโดนใส่ร้าย ทั้งที่ไม่มีเลือด</h2>
+    <p>เวกัสไม่ได้ตอบสนองต่อ "เลือด" มันตอบสนองต่อ <b>สถานการณ์</b> และเหตุการณ์ทั้งหมดของคุณมีเส้นร่วมเส้นเดียว</p>
+    <table>
+      <tr><th>เหตุการณ์</th><th>สภาพตอนนั้น</th></tr>
+      <tr><td>ดูดเลือด / ฉีดวัคซีน</td><td>นั่งนิ่ง ปล่อยให้เขาทำ ขยับไม่ได้</td></tr>
+      <tr><td>กดหนองกุ้งยิง</td><td>นอนนิ่ง ทนเจ็บ</td></tr>
+      <tr><td>ยืนหน้าเสาธง / ต่อแถว</td><td>ยืนนิ่ง ออกจากแถวไม่ได้</td></tr>
+      <tr><td>นั่งส้วมตอนท้องเสีย</td><td>ลุกไม่ได้ ไม่มีแรง</td></tr>
+      <tr><td><b>โดนใส่ร้าย ไม่มีใครฟัง</b></td><td><b>สู้ก็ไม่ได้ หนีก็ไม่ได้</b></td></tr>
+    </table>
+    <p>ร่างกายมีทางเลือก 3 แบบ: <b>สู้ / หนี / ดับเครื่อง</b> สองแบบแรกต้องใช้ความดันสูง ถ้าสถานการณ์ปิดทางทั้งสู้และหนี ร่างกายบางคนจะเลือกแบบที่สาม</p>
+    <div class="note w"><b>เก้าอี้ทำฟันตอนผ่าคือสถานการณ์ "ทำอะไรไม่ได้" ชั้นดี</b> — ผ้าคลุมหน้า อ้าปากค้าง พูดไม่ได้ มองไม่เห็น ตัวขยับตามแรงหมอ แก้ด้วยการคืนอำนาจควบคุม: ตกลงสัญญาณมือกับหมอไว้ล่วงหน้า</div>
+  </div>
+
+  <div class="card">
+    <h2>ทำไมห้ามใช้หายใจลึก/ผ่อนคลายเป็นหลัก</h2>
+    <table>
+      <tr><th></th><th>ความดันตอนเจอสิ่งกระตุ้น</th><th>สิ่งที่ต้องทำ</th></tr>
+      <tr><td>กลัวหมา / ที่สูง</td><td>สูงเกิน</td><td>ผ่อนคลาย ดึงลง</td></tr>
+      <tr><td><b>กลัวเลือด (คุณ)</b></td><td><b>ต่ำเกิน</b></td><td><b>เกร็ง ดันขึ้น</b></td></tr>
+    </table>
+    <p>หายใจเข้าลึกช้ายาวไปกระตุ้นเวกัส ซึ่งคือเบรกตัวเดียวกับที่กำลังทำให้คุณจะเป็นลม คุณจึงไปเหยียบเบรกซ้ำตอนรถกำลังจะดับ</p>
+    <p class="muted">ไม่ได้ห้ามหายใจ — ให้หายใจปกติ ห้ามกลั้น แค่ห้ามใช้ "หายใจลึกยาว" เป็นเครื่องมือหลักตอนอาการมา</p>
+  </div>
+
+  <details>
+    <summary>เป็นอาการทางจิตไหม</summary>
+    <div class="body">
+      <p>ในเชิงการจัดหมวด ใช่ — อยู่ใน DSM-5 ชื่อ <i>Specific Phobia, Blood-Injection-Injury type</i> แต่ "ทางจิต" ไม่ได้แปลว่าคุณคิดไปเอง ไม่ได้แปลว่าใจไม่สู้</p>
+      <p>สิ่งที่เกิดกับคุณคือ <b>ปฏิกิริยาทางกายที่วัดได้จริง</b> ความดันตก ชีพจรช้าลง เลือดไปเลี้ยงสมองไม่พอ ถ้าเอาเครื่องวัดมาจับจะเห็นตัวเลขชัด คุณสั่งให้มันไม่เกิดด้วยการใจแข็งไม่ได้ เหมือนสั่งไม่ให้ตัวเองจามไม่ได้</p>
+      <p>และโรคนี้เป็นโรคกลัวชนิดเดียวที่มีแนวโน้ม <b>ถ่ายทอดทางพันธุกรรมชัดเจน</b> ลองถามพ่อแม่พี่น้องดู มีโอกาสสูงที่จะเจอคนเป็นลมง่ายแบบเดียวกัน</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>หายขาดได้ไหม</summary>
+    <div class="body">
+      <table>
+        <tr><th></th><th>หายขาดได้ไหม</th></tr>
+        <tr><td>ความกลัว + เป็นลมเวลาเจอเลือด/เข็ม/หัตถการ</td><td><b>ได้</b> — ตอบสนองต่อการรักษาดีที่สุดชนิดหนึ่งในวงการ</td></tr>
+        <tr><td>ร่างกายที่เป็นลมง่ายโดยธรรมชาติ (แดด ยืนนาน ขาดน้ำ ลุกพรวด)</td><td><b>ไม่หายขาด</b> แต่จัดการได้ด้วยเทคนิคเดียวกัน</td></tr>
+      </table>
+      <p>งานวิจัยของ Öst &amp; Sterner และงานที่ตามมา รายงานว่าผู้ป่วยส่วนใหญ่ (ราว 70–90%) ดีขึ้นชัดเจนภายในการรักษาไม่กี่ครั้ง และผลอยู่ได้ระยะยาว — แต่เป็นการศึกษาขนาดไม่ใหญ่ ตัวเลขจึงเป็นแนวโน้ม ไม่ใช่การรับประกัน</p>
+      <p><b>เป้าหมายที่สมจริง</b> ไม่ใช่ "เห็นเลือดแล้วเฉยๆ เหมือนคนทั่วไป" แต่คือ <b>รู้ทันอาการตั้งแต่ต้น หยุดมันได้เอง และผ่านหัตถการไปได้โดยไม่ล้ม</b></p>
+    </div>
+  </details>
+
+  <details>
+    <summary>เรื่องยาและน้ำ</summary>
+    <div class="body">
+      <p><b>Slinda (drospirenone)</b> มีฤทธิ์ขับโซเดียมอ่อนๆ ความดันจึงมีแนวโน้มต่ำลงเล็กน้อย <b>ห้ามหยุดยาเอง</b> แต่ควรบอกทันตแพทย์ว่ากินอยู่ และให้ความสำคัญกับน้ำ+เกลือมากกว่าคนทั่วไป</p>
+      <p><b>น้ำ 2–3 ลิตร/วันดีมาก</b> แต่ถ้าดื่มน้ำเปล่าล้วนโดยไม่ได้เกลือตาม จะเจือจางโซเดียมและไม่ได้เพิ่มปริมาณเลือดอย่างที่ควร</p>
+    </div>
+  </details>
+
+  <p class="muted" style="text-align:center;padding:10px 0 4px">
+    เครื่องมือช่วยฝึก ไม่ใช่การวินิจฉัยทางการแพทย์<br>ถ้ามีสัญญาณในหน้า "ฉุกเฉิน" ให้ไปพบแพทย์
+  </p>
+</section>
+
+</main>
+
+<nav>
+  <button data-go="s-train" class="on"><span class="ic">⏱️</span>ฝึก</button>
+  <button data-go="s-sos"><span class="ic">🚨</span>ฉุกเฉิน</button>
+  <button data-go="s-plan"><span class="ic">📅</span>ตาราง</button>
+  <button data-go="s-log"><span class="ic">📝</span>บันทึก</button>
+  <button data-go="s-learn"><span class="ic">🫀</span>เข้าใจ</button>
+</nav>
+
+<script>
+/* ---------------- storage ---------------- */
+var KEY = 'bii_v1';
+var DEF = { settings:{tense:15,rest:30,cycles:5,sound:1}, target:'2026-10-11', plan:{}, logs:[], events:[] };
+var S;
+try { S = Object.assign({}, DEF, JSON.parse(localStorage.getItem(KEY) || '{}')); }
+catch(e){ S = JSON.parse(JSON.stringify(DEF)); }
+S.settings = Object.assign({}, DEF.settings, S.settings || {});
+S.plan = S.plan || {}; S.logs = S.logs || []; S.events = S.events || [];
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+function today(){ var d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function $(id){ return document.getElementById(id); }
+
+/* ---------------- nav ---------------- */
+document.querySelectorAll('nav button').forEach(function(b){
+  b.onclick = function(){
+    document.querySelectorAll('nav button').forEach(function(x){ x.classList.remove('on'); });
+    document.querySelectorAll('section').forEach(function(x){ x.classList.remove('on'); });
+    b.classList.add('on');
+    $(b.dataset.go).classList.add('on');
+    window.scrollTo(0,0);
+  };
+});
+
+/* ---------------- feedback ---------------- */
+var ac = null;
+function beep(freq, dur){
+  if(!+S.settings.sound) return;
+  try{
+    if(!ac) ac = new (window.AudioContext||window.webkitAudioContext)();
+    var o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = freq; o.type = 'sine';
+    g.gain.setValueAtTime(0.0001, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.28, ac.currentTime+0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime+dur);
+    o.start(); o.stop(ac.currentTime+dur+0.02);
+  }catch(e){}
+  if(navigator.vibrate) { try{ navigator.vibrate(freq>600?[90,60,90]:160); }catch(e){} }
+}
+
+var wl = null;
+function lockScreen(on){
+  try{
+    if(on && 'wakeLock' in navigator){ navigator.wakeLock.request('screen').then(function(x){ wl=x; }).catch(function(){}); }
+    else if(wl){ wl.release(); wl=null; }
+  }catch(e){}
+}
+
+/* ---------------- timer ---------------- */
+var CIRC = 2*Math.PI*52;
+var t = { on:false, phase:'tense', cycle:1, left:0, endAt:0, tick:null };
+
+function paint(){
+  var total = t.phase==='tense' ? +S.settings.tense : +S.settings.rest;
+  var left = t.on ? Math.max(0,(t.endAt-Date.now())/1000) : total;
+  $('count').textContent = Math.ceil(left);
+  $('arc').style.strokeDashoffset = CIRC * (1 - (left/total));
+  $('arc').setAttribute('stroke-dasharray', CIRC);
+  $('ring').classList.toggle('rest', t.phase==='rest');
+  $('phase').textContent = !t.on ? 'พร้อมเริ่ม' : (t.phase==='tense' ? 'เกร็ง' : 'คลาย');
+  $('cyc').textContent = 'ครั้งที่ ' + t.cycle + ' / ' + S.settings.cycles;
+}
+
+function goPhase(p){
+  t.phase = p;
+  var total = p==='tense' ? +S.settings.tense : +S.settings.rest;
+  t.endAt = Date.now() + total*1000;
+  beep(p==='tense' ? 760 : 420, p==='tense' ? 0.16 : 0.12);
+  paint();
+}
+
+function loop(){
+  if(!t.on) return;
+  if(Date.now() >= t.endAt){
+    if(t.phase === 'tense'){ goPhase('rest'); }
+    else {
+      if(t.cycle >= +S.settings.cycles){ finish(); return; }
+      t.cycle++; goPhase('tense');
+    }
+  }
+  paint();
+}
+
+function finish(){
+  stop();
+  beep(980, 0.45);
+  var d = today();
+  S.plan[d] = S.plan[d] || [false,false,false,false,false];
+  for(var i=0;i<5;i++){ if(!S.plan[d][i]){ S.plan[d][i]=true; break; } }
+  save(); renderPlan(); renderKpi();
+  $('phase').textContent = 'จบรอบ';
+  $('count').textContent = '✓';
+}
+
+function start(){
+  t.on = true; t.cycle = 1;
+  $('btnStart').textContent = 'หยุดชั่วคราว';
+  lockScreen(true);
+  goPhase('tense');
+  t.tick = setInterval(loop, 100);
+}
+function stop(){
+  t.on = false; clearInterval(t.tick);
+  $('btnStart').textContent = 'เริ่ม';
+  lockScreen(false);
+}
+$('btnStart').onclick = function(){ if(t.on){ stop(); paint(); } else { start(); } };
+$('btnReset').onclick = function(){ stop(); t.cycle=1; t.phase='tense'; paint(); };
+
+['setTense','setRest','setCycles','setSound'].forEach(function(id){
+  var k = {setTense:'tense', setRest:'rest', setCycles:'cycles', setSound:'sound'}[id];
+  $(id).value = S.settings[k];
+  $(id).onchange = function(){ S.settings[k] = $(id).value; save(); if(!t.on) paint(); };
+});
+
+/* ---------------- plan ---------------- */
+var FOCUS = [
+  'นั่งเก้าอี้อย่างเดียว โฟกัสหา "ความรู้สึกอุ่นวูบขึ้นหน้า" ให้เจอ',
+  'นั่งเก้าอี้อย่างเดียว จับความรู้สึกอุ่นให้ชินขึ้น',
+  'นั่งเก้าอี้อย่างเดียว ควรเริ่มเกร็งได้โดยไม่ต้องนึกลำดับ',
+  'เพิ่ม "ท่ายืนไขว้ขา" 2 รอบ',
+  'เพิ่ม "ท่ายืนไขว้ขา" 2 รอบ',
+  'เพิ่ม "ท่านอนแล้วลุก" 2 รอบ',
+  'เพิ่ม "ท่านอนแล้วลุก" 2 รอบ — จบสัปดาห์ พร้อมไป exposure'
+];
+
+function dayKey(offset){
+  var base = S.startDate ? new Date(S.startDate+'T00:00:00') : new Date();
+  base.setDate(base.getDate()+offset);
+  return base.getFullYear()+'-'+String(base.getMonth()+1).padStart(2,'0')+'-'+String(base.getDate()).padStart(2,'0');
+}
+if(!S.startDate){ S.startDate = today(); save(); }
+
+function renderPlan(){
+  var html = '';
+  for(var i=0;i<7;i++){
+    var k = dayKey(i);
+    var arr = S.plan[k] || [false,false,false,false,false];
+    var done = arr.filter(Boolean).length;
+    var dots = '';
+    for(var j=0;j<5;j++){
+      dots += '<button class="dot'+(arr[j]?' done':'')+'" data-k="'+k+'" data-j="'+j+'">'+(j+1)+'</button>';
+    }
+    var label = new Date(k+'T00:00:00').toLocaleDateString('th-TH',{weekday:'short',day:'numeric',month:'short'});
+    html += '<div class="day'+(k===today()?' today':'')+'">'+
+      '<div class="dayhead"><b>วันที่ '+(i+1)+' · '+label+'</b>'+
+      '<span class="pill '+(done>=5?'o':(done>0?'a':'w'))+'">'+done+'/5</span></div>'+
+      '<div class="dayfocus">'+FOCUS[i]+'</div><div class="dots">'+dots+'</div></div>';
+  }
+  $('planList').innerHTML = html;
+  $('planList').querySelectorAll('.dot').forEach(function(b){
+    b.onclick = function(){
+      var k=b.dataset.k, j=+b.dataset.j;
+      S.plan[k] = S.plan[k] || [false,false,false,false,false];
+      S.plan[k][j] = !S.plan[k][j];
+      save(); renderPlan(); renderKpi();
+    };
+  });
+}
+
+function renderKpi(){
+  var d = today();
+  var todayN = (S.plan[d]||[]).filter(Boolean).length;
+  var total = 0;
+  Object.keys(S.plan).forEach(function(k){ total += (S.plan[k]||[]).filter(Boolean).length; });
+  var streak = 0, cur = new Date();
+  while(true){
+    var k = cur.getFullYear()+'-'+String(cur.getMonth()+1).padStart(2,'0')+'-'+String(cur.getDate()).padStart(2,'0');
+    var n = (S.plan[k]||[]).filter(Boolean).length;
+    if(n>0) streak++;
+    else if(k!==d) break;
+    else break;
+    cur.setDate(cur.getDate()-1);
+  }
+  $('kToday').textContent = todayN;
+  $('kTotal').textContent = total;
+  $('kStreak').textContent = streak;
+}
+
+/* ---------------- countdown ---------------- */
+$('targetDate').value = S.target;
+$('targetDate').onchange = function(){ S.target = $('targetDate').value; save(); renderCountdown(); };
+function renderCountdown(){
+  if(!S.target){ $('countdown').textContent = '—'; return; }
+  var a = new Date(today()+'T00:00:00'), b = new Date(S.target+'T00:00:00');
+  var days = Math.round((b-a)/86400000);
+  var txt = new Date(S.target+'T00:00:00').toLocaleDateString('th-TH',{day:'numeric',month:'long',year:'numeric'});
+  $('countdown').innerHTML = days>=0
+    ? 'เหลืออีก <b style="color:var(--accent);font-size:20px">'+days+'</b> วัน ถึง '+txt
+    : 'ผ่านวันนัด ('+txt+') มาแล้ว '+Math.abs(days)+' วัน';
+}
+
+/* ---------------- logs ---------------- */
+$('lgDate').value = today();
+$('evDate').value = today();
+
+$('lgSave').onclick = function(){
+  S.logs.unshift({ type:'train', date:$('lgDate').value, rounds:$('lgRounds').value,
+    warm:$('lgWarm').value, ache:$('lgAche').value, note:$('lgNote').value });
+  $('lgNote').value = ''; save(); renderLogs();
+  $('lgSave').textContent = 'บันทึกแล้ว ✓';
+  setTimeout(function(){ $('lgSave').textContent = 'บันทึก'; }, 1400);
+};
+
+$('evSave').onclick = function(){
+  S.logs.unshift({ type:'event', date:$('evDate').value, what:$('evWhat').value,
+    first:$('evFirst').value, sec:$('evSec').value, peak:$('evPeak').value,
+    help:$('evHelp').value, note:$('evNote').value });
+  ['evWhat','evFirst','evSec','evNote'].forEach(function(i){ $(i).value=''; });
+  save(); renderLogs();
+  $('evSave').textContent = 'บันทึกแล้ว ✓';
+  setTimeout(function(){ $('evSave').textContent = 'บันทึกอาการ'; }, 1400);
+};
+
+function line(e){
+  if(e.type==='train'){
+    return '<b><span class="pill a">ฝึก</span> '+e.date+'</b>||'+
+      'ทำได้ '+e.rounds+'/5 · อุ่นขึ้นหน้า: '+e.warm+' · ปวดหัว: '+e.ache+
+      (e.note ? '<br>'+esc(e.note) : '');
+  }
+  return '<b><span class="pill d">อาการ</span> '+e.date+'</b>||'+
+    esc(e.what||'-')+'<br>สัญญาณแรก: '+esc(e.first||'-')+' · '+esc(e.sec||'-')+
+    '<br>ถึงระดับ: '+esc(e.peak)+' · '+esc(e.help)+
+    (e.note ? '<br>'+esc(e.note) : '');
+}
+function esc(s){ return String(s==null?'':s).replace(/[<>&]/g, function(c){ return {'<':'&lt;','>':'&gt;','&':'&amp;'}[c]; }); }
+
+function renderLogs(){
+  if(!S.logs.length){ $('logList').innerHTML = '<p class="muted">ยังไม่มีบันทึก</p>'; return; }
+  $('logList').innerHTML = S.logs.map(function(e,i){
+    var p = line(e).split('||');
+    return '<div class="entry"><div class="top">'+p[0]+
+      '<button class="del" data-i="'+i+'">ลบ</button></div><div>'+p[1]+'</div></div>';
+  }).join('');
+  $('logList').querySelectorAll('.del').forEach(function(b){
+    b.onclick = function(){ S.logs.splice(+b.dataset.i,1); save(); renderLogs(); };
+  });
+}
+
+$('btnCopy').onclick = function(){
+  var txt = '# รายงานการฝึก Applied Tension\n\n';
+  var d = today();
+  txt += 'วันที่ส่ง: '+d+'\n';
+  txt += 'รอบสะสมทั้งหมด: '+$('kTotal').textContent+' รอบ · ต่อเนื่อง '+$('kStreak').textContent+' วัน\n\n';
+  txt += '## เช็กลิสต์ 7 วัน\n';
+  for(var i=0;i<7;i++){
+    var k = dayKey(i);
+    txt += '- วันที่ '+(i+1)+' ('+k+'): '+((S.plan[k]||[]).filter(Boolean).length)+'/5\n';
+  }
+  txt += '\n## บันทึก\n';
+  S.logs.forEach(function(e){
+    if(e.type==='train'){
+      txt += '- [ฝึก] '+e.date+' — '+e.rounds+'/5, อุ่นขึ้นหน้า: '+e.warm+', ปวดหัว: '+e.ache+(e.note?', '+e.note:'')+'\n';
+    } else {
+      txt += '- [อาการ] '+e.date+' — '+(e.what||'-')+' | สัญญาณแรก: '+(e.first||'-')+' ('+(e.sec||'-')+') | ถึงระดับ '+e.peak+' | '+e.help+(e.note?' | '+e.note:'')+'\n';
+    }
+  });
+  var done = function(){ $('btnCopy').textContent='คัดลอกแล้ว ✓'; setTimeout(function(){ $('btnCopy').textContent='คัดลอกไปส่งให้นักบำบัด'; },1600); };
+  if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(done, function(){ fallback(txt); done(); }); }
+  else { fallback(txt); done(); }
+};
+function fallback(txt){
+  var ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta);
+  ta.select(); try{ document.execCommand('copy'); }catch(e){} document.body.removeChild(ta);
+}
+
+/* ---------------- init ---------------- */
+renderPlan(); renderKpi(); renderCountdown(); renderLogs(); paint();
+document.addEventListener('visibilitychange', function(){ if(!document.hidden && t.on) lockScreen(true); });
+</script>
+</body>
+</html>
