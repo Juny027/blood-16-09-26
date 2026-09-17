@@ -277,6 +277,11 @@ details .body{padding-top:10px;font-size:14px}
     <p>เป้าหมายสัปดาห์นี้คือทำให้ร่างกายเกร็งได้อัตโนมัติโดยไม่ต้องคิด <b>วันละ 5 รอบ รอบละ 3 นาที</b> ไม่ต้องทำติดกัน</p>
     <p class="muted">แตะช่องตัวเลขเพื่อเช็กว่าทำรอบนั้นแล้ว — กดปุ่มในหน้า "ฝึก" จนครบจะเช็กให้อัตโนมัติ</p>
   </div>
+  <div class="card">
+    <div class="field"><span>วันเริ่มฝึก (วันที่ 1)</span><input type="date" id="startDate"></div>
+    <div class="btnrow"><button id="btnStartToday">เริ่มวันที่ 1 เป็นวันนี้</button></div>
+    <p class="muted" style="margin-top:8px">ขาดไปวันหนึ่งไม่เป็นไร เลื่อนวันเริ่มได้ ติ๊กที่ทำไว้แล้วจะยังอยู่ตามวันที่จริง</p>
+  </div>
   <div id="planList"></div>
   <div class="card">
     <h3>หลังจบ 7 วัน</h3>
@@ -602,6 +607,16 @@ function dayKey(offset){
 }
 if(!S.startDate){ S.startDate = today(); save(); }
 
+function setStart(v){
+  if(!v) return;
+  S.startDate = v; save();
+  $('startDate').value = v;
+  renderPlan(); renderKpi();
+}
+$('startDate').value = S.startDate;
+$('startDate').onchange = function(){ setStart(this.value); };
+$('btnStartToday').onclick = function(){ setStart(today()); flash(this, 'ตั้งแล้ว ✓'); };
+
 function renderPlan(){
   var html = '';
   for(var i=0;i<7;i++){
@@ -640,7 +655,6 @@ function renderKpi(){
     var n = (S.plan[k]||[]).filter(Boolean).length;
     if(n>0) streak++;
     else if(k!==d) break;
-    else break;
     cur.setDate(cur.getDate()-1);
   }
   $('kToday').textContent = todayN;
@@ -713,6 +727,7 @@ function buildReport(){
   txt += 'วันที่ส่ง: ' + today() + '\n';
   txt += 'รอบสะสมทั้งหมด: ' + $('kTotal').textContent + ' รอบ · ต่อเนื่อง ' + $('kStreak').textContent + ' วัน\n';
   txt += 'ตั้งค่าที่ใช้: เกร็ง ' + S.settings.tense + ' วิ / คลาย ' + S.settings.rest + ' วิ × ' + S.settings.cycles + ' ครั้งต่อรอบ\n';
+  txt += 'วันเริ่มฝึก (วันที่ 1): ' + S.startDate + '\n';
   if(S.target) txt += 'วันนัดหมอฟัน: ' + S.target + '\n';
   txt += '\n## เช็กลิสต์ 7 วัน\n';
   for(var i=0;i<7;i++){
