@@ -285,12 +285,85 @@ details .body{padding-top:10px;font-size:14px}
   <div id="planList"></div>
   <div class="card">
     <h3>หลังจบ 7 วัน</h3>
-    <p>เราจะไปสร้าง fear hierarchy และเริ่ม exposure ทีละขั้น <b>ไม่ต้องรอครบ 7 วันถึงจะคุยกันต่อ</b> — ฝึกได้ 2–3 วันจนจับความรู้สึกอุ่นขึ้นหน้าได้แล้ว บอกได้เลย</p>
+    <p>ไปต่อที่แท็บ <b>🪜 เผชิญ</b> — เริ่มขั้น 1 เมื่อเกร็งแล้วรู้สึกอุ่นหรือหน้าแดงเกือบทุกครั้ง ติดกัน 2 วัน</p>
+    <p class="muted">หลังครบ 7 วัน ฝึกเกร็งต่อวันละ 2–3 รอบไปจนถึงวันผ่า เพื่อคงทักษะไว้</p>
   </div>
   <div class="card">
     <h3>นับถอยหลัง</h3>
     <p id="countdown" class="muted">—</p>
     <div class="field"><span>วันนัดหมอฟัน (แก้ไขได้)</span><input type="date" id="targetDate"></div>
+  </div>
+</section>
+
+<!-- ============ เผชิญ (exposure) ============ -->
+<section id="s-expo">
+  <div class="card">
+    <h2>เผชิญทีละขั้น</h2>
+    <p>ทำทีละขั้นจากง่ายไปยาก <b>คลื่นไส้เมื่อไหร่ เกร็งทันที</b> แล้วอยู่กับสถานการณ์นั้นต่อ ขยับขั้นเมื่อผ่านเกณฑ์เท่านั้น</p>
+    <div class="note"><b>เกณฑ์ขยับขั้น</b> — ผ่านครบ 3 ข้อ <b>2 ครั้งติดกัน</b><br>
+      1. อาการสูงสุดลดลงอย่างน้อย <b>ครึ่งหนึ่ง</b> จากครั้งแรกของขั้นนั้น<br>
+      2. <b>ไม่ต้องนอนลง</b> (นั่งลงบ้างยังนับว่าผ่าน)<br>
+      3. อยู่จนอาการลดลงเอง ไม่หยุดกลางคันตอนพีก</div>
+    <div class="note w"><b>ไม่มีการทำให้เลือดออกในแผนนี้</b> — ถ้าเลือดออกเองโดยบังเอิญ (เหงือกตอนแปรงฟัน, โกนขนบาด) ใช้เป็นโอกาสฝึกได้: มองพร้อมเกร็ง 30 วินาที แล้วจดในแท็บบันทึก → "บันทึกอาการ" · ห้ามทำให้เลือดออกเอง</div>
+    <div class="note d"><b>ความปลอดภัย</b> — อาการถึง 7 ขึ้นไป นั่งหรือนอนลงแล้วเกร็งทันที <b>ไม่นับว่าล้มเหลว</b> · ฝึกบนโซฟาหรือเตียง · กินข้าวและดื่มน้ำก่อนทุกครั้ง</div>
+  </div>
+
+  <div id="expoSteps"></div>
+
+  <div class="card">
+    <h3>บันทึกการเผชิญ</h3>
+    <div class="field"><span>วันที่</span><input type="date" id="exDate"></div>
+    <div class="field"><span>ขั้น</span><select id="exStep"></select></div>
+    <div class="field"><span>อาการสูงสุดแต่ละรอบ (0–10) — ทำไม่ถึง 3 รอบ เว้นว่างได้</span></div>
+    <div class="settings" style="margin-top:-6px;margin-bottom:12px">
+      <label>รอบ 1<select id="exR1"><option value="">—</option><option value="0">0 · เฉยๆ</option><option value="1">1</option><option value="2">2</option><option value="3">3 · ไม่สบายใจ</option><option value="4">4</option><option value="5">5 · คลื่นไส้</option><option value="6">6</option><option value="7">7 · ร้อนวูบ เหงื่อออก</option><option value="8">8</option><option value="9">9 · หูอื้อ ตามืด</option><option value="10">10 · เป็นลม</option></select></label>
+      <label>รอบ 2<select id="exR2"><option value="">—</option><option value="0">0 · เฉยๆ</option><option value="1">1</option><option value="2">2</option><option value="3">3 · ไม่สบายใจ</option><option value="4">4</option><option value="5">5 · คลื่นไส้</option><option value="6">6</option><option value="7">7 · ร้อนวูบ เหงื่อออก</option><option value="8">8</option><option value="9">9 · หูอื้อ ตามืด</option><option value="10">10 · เป็นลม</option></select></label>
+      <label>รอบ 3<select id="exR3"><option value="">—</option><option value="0">0 · เฉยๆ</option><option value="1">1</option><option value="2">2</option><option value="3">3 · ไม่สบายใจ</option><option value="4">4</option><option value="5">5 · คลื่นไส้</option><option value="6">6</option><option value="7">7 · ร้อนวูบ เหงื่อออก</option><option value="8">8</option><option value="9">9 · หูอื้อ ตามืด</option><option value="10">10 · เป็นลม</option></select></label>
+    </div>
+    <div class="field"><span>ต้องนั่งหรือนอนลงไหม</span>
+      <select id="exLay"><option>ไม่</option><option>นั่งลง</option><option>นอนลง</option></select></div>
+    <div class="field"><span>อยู่จนอาการลดลงเองไหม</span>
+      <select id="exStay"><option>ใช่</option><option>ไม่ — หยุดกลางคัน</option></select></div>
+    <div class="field"><span>หมายเหตุ (เกร็งแล้วช่วยไหม, สังเกตอะไร)</span><textarea id="exNote"></textarea></div>
+    <div class="btnrow" style="margin-top:0"><button class="primary" id="exSave">บันทึก</button></div>
+  </div>
+
+  <div class="card">
+    <h3>สเกลอาการ</h3>
+    <table>
+      <tr><td><b>0</b></td><td>เฉยๆ</td></tr>
+      <tr><td><b>3</b></td><td>ไม่สบายใจ</td></tr>
+      <tr><td><b>5</b></td><td>คลื่นไส้</td></tr>
+      <tr><td><b>7</b></td><td>ร้อนวูบ เหงื่อออก ← <b>นั่ง/นอนลง + เกร็ง</b></td></tr>
+      <tr><td><b>9</b></td><td>หูอื้อ ตามืด</td></tr>
+      <tr><td><b>10</b></td><td>เป็นลม</td></tr>
+    </table>
+  </div>
+
+  <details>
+    <summary>Fear hierarchy ทั้งหมด (0–100)</summary>
+    <div class="body">
+      <table>
+        <tr><th>คะแนน</th><th>สถานการณ์</th></tr>
+        <tr><td>95</td><td>ผ่าฟันฝังจริง</td></tr>
+        <tr><td>90</td><td>เจาะเลือด 1 หลอดในท่านั่ง <span class="muted">(ไม่ใช้ฝึก)</span></td></tr>
+        <tr><td>75</td><td>หลังผ่า: เห็นเลือดตัวเองบนก๊อซ</td></tr>
+        <tr><td>70</td><td>เห็นเลือดตัวเองหยดจากปลายนิ้ว <span class="muted">(ไม่ใช้ฝึก)</span></td></tr>
+        <tr><td>65</td><td>ใช้เข็มเจาะปลายนิ้วตัวเอง <span class="muted">(ไม่ใช้ฝึก)</span></td></tr>
+        <tr><td>60</td><td>บีบสิวจนมีเลือด <span class="muted">(ไม่ใช้ฝึก)</span></td></tr>
+        <tr><td>50</td><td>หลังผ่า: ลุกจากเก้าอี้แล้วเดินออก</td></tr>
+        <tr><td>45</td><td>ดูคลิปผ่าฟันฝังของคนอื่น</td></tr>
+        <tr><td>40</td><td>นั่งเก้าอี้ทำฟัน ฟังหมออธิบายขั้นตอนผ่า</td></tr>
+        <tr><td>30</td><td>กดเล็บจิกผิวตัวเองจนเจ็บ</td></tr>
+        <tr><td>25</td><td>หลังผ่า: ส่องกระจกเห็นหน้าบวม</td></tr>
+        <tr><td>0–10</td><td>นึกภาพเก้าอี้ผ่าฟัน · ดูเอกซเรย์ · เสียงกรอฟัน · ถือเข็มในซอง · ห้องรอคลินิก</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <div class="card">
+    <h3>ประวัติการเผชิญ</h3>
+    <div id="expoList"></div>
   </div>
 </section>
 
@@ -469,6 +542,7 @@ details .body{padding-top:10px;font-size:14px}
   <button data-go="s-train" class="on"><span class="ic">⏱️</span>ฝึก</button>
   <button data-go="s-sos"><span class="ic">🚨</span>ฉุกเฉิน</button>
   <button data-go="s-plan"><span class="ic">📅</span>ตาราง</button>
+  <button data-go="s-expo"><span class="ic">🪜</span>เผชิญ</button>
   <button data-go="s-log"><span class="ic">📝</span>บันทึก</button>
   <button data-go="s-learn"><span class="ic">🫀</span>เข้าใจ</button>
 </nav>
@@ -476,12 +550,12 @@ details .body{padding-top:10px;font-size:14px}
 <script>
 /* ---------------- storage ---------------- */
 var KEY = 'bii_v1';
-var DEF = { settings:{tense:15,rest:30,cycles:5,sound:1}, target:'2026-10-11', plan:{}, logs:[], events:[] };
+var DEF = { settings:{tense:15,rest:30,cycles:5,sound:1}, target:'2026-10-11', plan:{}, logs:[], events:[], expo:[] };
 var S;
 try { S = Object.assign({}, DEF, JSON.parse(localStorage.getItem(KEY) || '{}')); }
 catch(e){ S = JSON.parse(JSON.stringify(DEF)); }
 S.settings = Object.assign({}, DEF.settings, S.settings || {});
-S.plan = S.plan || {}; S.logs = S.logs || []; S.events = S.events || [];
+S.plan = S.plan || {}; S.logs = S.logs || []; S.events = S.events || []; S.expo = S.expo || [];
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
 function today(){ var d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 function $(id){ return document.getElementById(id); }
@@ -743,6 +817,21 @@ function buildReport(){
       txt += '- [อาการ] '+e.date+' — '+(e.what||'-')+' | สัญญาณแรก: '+(e.first||'-')+' ('+(e.sec||'-')+') | ถึงระดับ '+e.peak+' | '+e.help+(e.note?' | '+e.note:'')+'\n';
     }
   });
+  txt += '\n## Exposure\n';
+  if(!S.expo.length){ txt += '(ยังไม่เริ่ม)\n'; }
+  else {
+    STEPS.forEach(function(st){
+      var ev = evalStep(st.id);
+      if(!ev.n) return;
+      txt += '- ขั้น '+st.id+' ('+st.name+'): '+ev.n+' ครั้ง · ครั้งแรกสูงสุด '+(ev.base===null?'-':ev.base)+'/10 · ล่าสุด '+(ev.last===null?'-':ev.last)+'/10'+
+        (st.gate ? (ev.passed ? ' · ผ่านเกณฑ์แล้ว' : ' · ผ่านติดกัน '+ev.streak+'/2') : '')+'\n';
+    });
+    txt += '\n';
+    S.expo.slice().sort(function(a,b){ return a.date===b.date ? a.ts-b.ts : (a.date<b.date?-1:1); }).forEach(function(e){
+      var rs = (e.r||[]).map(function(v,i){ return 'รอบ'+(i+1)+': '+(v===null?'-':v+'/10'); }).join('  ');
+      txt += '[ขั้น '+e.step+'] '+e.date+'  '+rs+'  นั่ง/นอนลง: '+e.lay+'  อยู่จนอาการลด: '+e.stay+(e.note?'  | '+e.note:'')+'\n';
+    });
+  }
   return txt;
 }
 
@@ -800,20 +889,150 @@ $('fileIn').onchange = function(){
   r.onload = function(){
     var d;
     try{ d = JSON.parse(r.result); }catch(e){ alert('อ่านไฟล์ไม่ได้ — ต้องเป็นไฟล์ .json ที่สำรองจากแอปนี้'); return; }
-    if(!d || typeof d !== 'object' || (!d.plan && !d.logs)){ alert('ไฟล์นี้ไม่ใช่ข้อมูลสำรองของแอปนี้'); return; }
+    if(!d || typeof d !== 'object' || (!d.plan && !d.logs && !d.expo)){ alert('ไฟล์นี้ไม่ใช่ข้อมูลสำรองของแอปนี้'); return; }
     var nLogs = (d.logs||[]).length, nDays = Object.keys(d.plan||{}).length;
     if(!confirm('นำเข้า '+nLogs+' บันทึก และ '+nDays+' วันที่ฝึก\n\nข้อมูลเดิมในเครื่องนี้จะถูกแทนที่ทั้งหมด ยืนยันไหม')) return;
     S = Object.assign({}, DEF, d);
     S.settings = Object.assign({}, DEF.settings, S.settings || {});
-    S.plan = S.plan || {}; S.logs = S.logs || []; S.events = S.events || [];
+    S.plan = S.plan || {}; S.logs = S.logs || []; S.events = S.events || []; S.expo = S.expo || [];
     save();
     location.reload();
   };
   r.readAsText(f);
 };
 
+
+/* ---------------- exposure ---------------- */
+var STEPS = [
+  { id:'1A', lv:1, score:'45', name:'ดูคลิปผ่าฟันฝังของคนอื่น', when:'25–28 ก.ย.', gate:true,
+    how:['นั่งโซฟาหรือเตียง กินข้าวและดื่มน้ำมาก่อน',
+         'หาคลิปผ่า mesiodens / supernumerary tooth extraction ยาว 3–5 นาที',
+         'เกร็ง 1 รอบก่อนกดเล่น',
+         'ดูคลิป ห้ามหลับตา ห้ามเลื่อนข้าม',
+         'คลื่นไส้เมื่อไหร่ เกร็งทันที แล้วดูต่อขณะเกร็ง',
+         'จบแล้วเปิดซ้ำทันที รวม 3 รอบ จดอาการสูงสุดแต่ละรอบ',
+         'คาดว่า: รอบ 1 ประมาณ 4–5 → รอบ 3 ลดเหลือ 2–3'] },
+  { id:'1B', lv:1, score:'30', name:'กดเล็บจิกผิวตัวเองแล้วมอง', when:'25–28 ก.ย.', gate:true,
+    how:['กดเล็บจิกหลังมือหรือต้นแขนให้เจ็บในระดับที่ทนได้ ค้าง 10 วินาที',
+         'ระหว่างนั้นมองตรงจุดที่กด อย่าหันหนี',
+         'ปล่อยแล้วดูรอยเล็บต่อ 30 วินาที',
+         'ทำ 5 ครั้ง (บันทึกเป็นรอบ 1–3 ได้ตามสะดวก)'] },
+  { id:'2', lv:2, score:'—', name:'จินตนาการการผ่าของตัวเอง + เจ็บที่ร่างกายแบบไม่มีแผล', when:'29 ก.ย.–5 ต.ค.', gate:true },
+  { id:'3', lv:3, score:'—', name:'ภาพหลังผ่าของคนอื่น + ก๊อซเลือดปลอม + ซ้อมลุกเดิน', when:'6–10 ต.ค.', gate:true },
+  { id:'4', lv:3, score:'40', name:'พบหมอฟัน ฟังอธิบายขั้นตอนผ่า', when:'11 ต.ค.', gate:false },
+  { id:'5', lv:4, score:'—', name:'ซ้อมที่คลินิกจริง: นัดจัดฟัน/ขูดหินปูน + ลุก 2 จังหวะ', when:'หลัง 11 ต.ค. ก่อนวันผ่า', gate:false },
+  { id:'6', lv:5, score:'95', name:'ผ่าฟันฝัง', when:'ตามนัด', gate:false }
+];
+function stepById(id){ for(var i=0;i<STEPS.length;i++){ if(STEPS[i].id===id) return STEPS[i]; } return null; }
+
+function peakOf(e){
+  var m = null;
+  (e.r||[]).forEach(function(v){ if(v!==null && v!=='' && !isNaN(v)){ v=+v; if(m===null||v>m) m=v; } });
+  return m;
+}
+function expoOf(id){
+  return S.expo.filter(function(e){ return e.step===id; })
+    .sort(function(a,b){ return a.date===b.date ? a.ts-b.ts : (a.date<b.date?-1:1); });
+}
+function evalStep(id){
+  var es = expoOf(id);
+  var res = { n:es.length, base:null, last:null, streak:0, passed:false };
+  if(!es.length) return res;
+  res.base = peakOf(es[0]);
+  res.last = peakOf(es[es.length-1]);
+  var target = res.base ? res.base/2 : 0, run = 0, best = 0;
+  for(var i=1;i<es.length;i++){
+    var pk = peakOf(es[i]);
+    var ok = pk!==null && pk<=target && es[i].lay!=='นอนลง' && es[i].stay==='ใช่';
+    run = ok ? run+1 : 0;
+    if(run>best) best = run;
+  }
+  res.streak = run;
+  res.passed = best>=2;
+  return res;
+}
+
+function renderExpo(){
+  var cur = null;
+  STEPS.forEach(function(st){
+    if(cur) return;
+    var ev = evalStep(st.id);
+    if(st.gate ? !ev.passed : !ev.n) cur = st.id;
+  });
+  var html = '';
+  STEPS.forEach(function(st){
+    var ev = evalStep(st.id), pill;
+    if(!st.gate){
+      pill = ev.n ? '<span class="pill o">ทำแล้ว</span>' : '<span class="pill w">ยังไม่ถึง</span>';
+    } else if(ev.passed){
+      pill = '<span class="pill o">ผ่านเกณฑ์แล้ว</span>';
+    } else if(ev.n){
+      pill = '<span class="pill a">ผ่านติดกัน '+ev.streak+'/2</span>';
+    } else {
+      pill = '<span class="pill w">ยังไม่เริ่ม</span>';
+    }
+    var stat = '';
+    if(ev.n){
+      stat = '<p class="d">ฝึกแล้ว '+ev.n+' ครั้ง · ครั้งแรกสูงสุด '+(ev.base===null?'—':ev.base)+'/10 · ล่าสุด '+(ev.last===null?'—':ev.last)+'/10';
+      if(st.gate && !ev.passed && ev.base!==null) stat += ' · เป้า ≤ '+(Math.round(ev.base/2*10)/10)+'/10';
+      stat += '</p>';
+    }
+    var how = '';
+    if(st.how){
+      how = '<details style="margin:8px 0 0;padding:10px"><summary>วิธีทำ</summary><div class="body"><ol>'+
+        st.how.map(function(x){ return '<li>'+x+'</li>'; }).join('')+'</ol></div></details>';
+    } else if(st.id===cur){
+      how = '<p class="d" style="margin-top:6px">ส่งรายงานให้นักบำบัดเพื่อรับรายละเอียดขั้นนี้</p>';
+    }
+    html += '<div class="step l'+st.lv+'"'+(st.id===cur?' style="outline:2px solid var(--accent)"':'')+'>'+
+      '<div class="lv">'+st.id+'</div><div style="flex:1;min-width:0">'+
+      '<p class="t">'+st.name+' <span class="muted">('+st.score+')</span></p>'+
+      '<p class="d">'+st.when+(st.id===cur?' · <b style="color:var(--accent)">ขั้นปัจจุบัน</b>':'')+'</p>'+
+      '<div style="margin-top:4px">'+pill+'</div>'+stat+how+'</div></div>';
+  });
+  $('expoSteps').innerHTML = html;
+
+  if(!$('exStep').options.length){
+    $('exStep').innerHTML = STEPS.map(function(st){ return '<option value="'+st.id+'">ขั้น '+st.id+' · '+st.name+'</option>'; }).join('');
+  }
+  if(cur && !$('exStep').dataset.touched) $('exStep').value = cur;
+
+  var list = S.expo.slice().sort(function(a,b){ return a.date===b.date ? b.ts-a.ts : (a.date<b.date?1:-1); });
+  if(!list.length){ $('expoList').innerHTML = '<p class="muted">ยังไม่มีบันทึก</p>'; return; }
+  $('expoList').innerHTML = list.map(function(e){
+    var st = stepById(e.step) || {name:''};
+    var rs = (e.r||[]).map(function(v,i){ return (v===null||v==='') ? '' : 'รอบ'+(i+1)+': '+v; }).filter(Boolean).join(' · ');
+    return '<div class="entry"><div class="top"><b><span class="pill a">ขั้น '+esc(e.step)+'</span> '+esc(e.date)+'</b>'+
+      '<button class="del" data-ts="'+e.ts+'">ลบ</button></div>'+
+      '<div>'+esc(st.name)+'<br>'+esc(rs||'—')+'<br>นั่ง/นอนลง: '+esc(e.lay)+' · อยู่จนอาการลด: '+esc(e.stay)+
+      (e.note ? '<br>'+esc(e.note) : '')+'</div></div>';
+  }).join('');
+  $('expoList').querySelectorAll('.del').forEach(function(b){
+    b.onclick = function(){
+      if(!confirm('ลบบันทึกนี้?')) return;
+      var ts = +b.dataset.ts;
+      S.expo = S.expo.filter(function(e){ return e.ts!==ts; });
+      save(); renderExpo();
+    };
+  });
+}
+
+$('exDate').value = today();
+$('exStep').onchange = function(){ this.dataset.touched = '1'; };
+$('exSave').onclick = function(){
+  var r = [$('exR1').value, $('exR2').value, $('exR3').value].map(function(v){ return v==='' ? null : +v; });
+  if(r.every(function(v){ return v===null; })){ alert('ใส่คะแนนอาการอย่างน้อย 1 รอบ'); return; }
+  S.expo.push({ ts:Date.now(), date:$('exDate').value || today(), step:$('exStep').value, r:r,
+    lay:$('exLay').value, stay:$('exStay').value==='ใช่' ? 'ใช่' : 'ไม่', note:$('exNote').value });
+  ['exR1','exR2','exR3','exNote'].forEach(function(i){ $(i).value=''; });
+  $('exLay').value = 'ไม่'; $('exStay').value = 'ใช่';
+  delete $('exStep').dataset.touched;
+  save(); renderExpo();
+  flash($('exSave'), 'บันทึกแล้ว ✓');
+};
+
 /* ---------------- init ---------------- */
-renderPlan(); renderKpi(); renderCountdown(); renderLogs(); paint();
+renderPlan(); renderKpi(); renderCountdown(); renderLogs(); renderExpo(); paint();
 document.addEventListener('visibilitychange', function(){ if(!document.hidden && t.on) lockScreen(true); });
 </script>
 </body>
